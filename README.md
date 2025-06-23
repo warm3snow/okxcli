@@ -5,6 +5,7 @@ A command-line interface for interacting with the CEX cryptocurrency exchange.
 ## Features
 
 - Market data retrieval
+- Account balance information
 - Trading operations (coming soon)
 - Account management (coming soon)
 - Configuration management with config files and environment variables
@@ -63,6 +64,17 @@ cexcli market ticker BTC-USDT
 Use simulated trading mode:
 ```bash
 cexcli --simulated market ticker BTC-USDT
+```
+
+### Account Information
+
+Get account balances:
+```bash
+# Get all balances
+cexcli balance
+
+# Get balances for specific currencies
+cexcli balance BTC,USDT
 ```
 
 ## Contributing

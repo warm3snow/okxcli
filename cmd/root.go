@@ -51,4 +51,8 @@ func init() {
 	viper.BindPFlag("cex.api.secret_key", rootCmd.PersistentFlags().Lookup("api-secret"))
 	viper.BindPFlag("cex.api.passphrase", rootCmd.PersistentFlags().Lookup("passphrase"))
 	viper.BindPFlag("cex.api.is_simulated", rootCmd.PersistentFlags().Lookup("simulated"))
+
+	// Add commands
+	rootCmd.AddCommand(marketCmd)
+	rootCmd.AddCommand(balanceCmd)
 }
