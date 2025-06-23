@@ -1,4 +1,4 @@
-package cmd
+package market
 
 import (
 	"encoding/json"
@@ -9,13 +9,6 @@ import (
 	"github.com/warm3snow/cexcli/internal/cex"
 	"github.com/warm3snow/cexcli/internal/config"
 )
-
-var marketCmd = &cobra.Command{
-	Use:   "market",
-	Short: "Market data related commands",
-	Long: `Market data commands allow you to fetch various market information from CEX exchange,
-including tickers, order books, trades, and more.`,
-}
 
 var tickerCmd = &cobra.Command{
 	Use:   "ticker [symbol]",
@@ -53,6 +46,5 @@ var tickerCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(marketCmd)
-	marketCmd.AddCommand(tickerCmd)
+	MarketCmd.AddCommand(tickerCmd)
 }

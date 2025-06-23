@@ -40,3 +40,32 @@ func (c *Client) GetBalances(currencies ...string) ([]types.Balance, error) {
 
 	return result.Data, nil
 }
+
+// GetAssetValuation 获取账户资产估值
+func (c *Client) GetAssetValuation(ccy string) (*types.AssetValuation, error) {
+	url := "/api/v5/asset/asset-valuation"
+	if ccy != "" {
+		url += "?ccy=" + ccy
+	}
+
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var result struct {
+		Code string                 `json:"code"`
+		Msg  string                 `json:"msg"`
+		Data []types.AssetValuation `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	if len(result.Data) == 0 {
+		return nil, fmt.Errorf("no data returned")
+	}
+	return &result.Data[0], nil
+}

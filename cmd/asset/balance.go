@@ -1,4 +1,4 @@
-package cmd
+package asset
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 	"github.com/warm3snow/cexcli/internal/config"
 )
 
-var balanceCmd = &cobra.Command{
+var BalanceCmd = &cobra.Command{
 	Use:   "balance [currencies...]",
 	Short: "Get account balance information",
 	Long: `Get account balance information for all currencies or specified currencies.
@@ -51,4 +51,4 @@ Example:
 
 		fmt.Println(string(output))
 	},
-} 
+}

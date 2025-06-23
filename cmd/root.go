@@ -6,6 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/warm3snow/cexcli/cmd/asset"
+	"github.com/warm3snow/cexcli/cmd/market"
 	"github.com/warm3snow/cexcli/internal/config"
 	"github.com/warm3snow/cexcli/logger"
 )
@@ -53,6 +55,7 @@ func init() {
 	viper.BindPFlag("cex.api.is_simulated", rootCmd.PersistentFlags().Lookup("simulated"))
 
 	// Add commands
-	rootCmd.AddCommand(marketCmd)
-	rootCmd.AddCommand(balanceCmd)
+	rootCmd.AddCommand(market.MarketCmd)
+	rootCmd.AddCommand(asset.BalanceCmd)
+	rootCmd.AddCommand(asset.ValuationCmd)
 }
