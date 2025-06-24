@@ -48,12 +48,14 @@ func init() {
 	rootCmd.PersistentFlags().String("api-secret", "", "CEX API secret")
 	rootCmd.PersistentFlags().String("passphrase", "", "CEX API passphrase")
 	rootCmd.PersistentFlags().Bool("simulated", false, "Use simulated trading")
+	rootCmd.PersistentFlags().Bool("simple", false, "Stdout simple information")
 
 	// Bind flags to viper
 	viper.BindPFlag("cex.api.api_key", rootCmd.PersistentFlags().Lookup("api-key"))
 	viper.BindPFlag("cex.api.secret_key", rootCmd.PersistentFlags().Lookup("api-secret"))
 	viper.BindPFlag("cex.api.passphrase", rootCmd.PersistentFlags().Lookup("passphrase"))
 	viper.BindPFlag("cex.api.is_simulated", rootCmd.PersistentFlags().Lookup("simulated"))
+	viper.BindPFlag("simple", rootCmd.PersistentFlags().Lookup("simple"))
 
 	// Add commands
 	rootCmd.AddCommand(market.MarketCmd)

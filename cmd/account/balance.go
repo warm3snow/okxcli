@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/warm3snow/cexcli/internal/cex"
 	"github.com/warm3snow/cexcli/internal/config"
 )
@@ -32,11 +33,19 @@ var BalanceCmd = &cobra.Command{
 			fmt.Fprintf(os.Stderr, "Error fetching account balance: %v\n", err)
 			os.Exit(1)
 		}
-		output, err := json.MarshalIndent(balances, "", "  ")
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error formatting output: %v\n", err)
-			os.Exit(1)
+		if viper.GetBool("simple") {
+			for _, acc := range balances {
+				for _, d := range acc.Details {
+					fmt.Printf("币种: %s, 总权益: %s, 可用余额: %s\n", d.Ccy, d.Eq, d.AvailBal)
+				}
+			}
+		} else {
+			output, err := json.MarshalIndent(balances, "", "  ")
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Error formatting output: %v\n", err)
+				os.Exit(1)
+			}
+			fmt.Println(string(output))
 		}
-		fmt.Println(string(output))
 	},
 }
