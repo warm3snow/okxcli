@@ -4,7 +4,7 @@ import "github.com/spf13/cobra"
 
 var AccountCmd = &cobra.Command{
 	Use:   "account",
-	Short: "account related commands",
+	Short: "Account related commands",
 }
 
 func init() {
