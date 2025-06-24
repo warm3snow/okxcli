@@ -59,3 +59,27 @@ func (c *Client) GetAccountPositions(params map[string]string) ([]types.AccountP
 	}
 	return result.Data, nil
 }
+
+// GetAccountPositionRisk 查询账户持仓风险
+func (c *Client) GetAccountPositionRisk(instType string) ([]types.AccountPositionRisk, error) {
+	url := "/api/v5/account/account-position-risk"
+	if instType != "" {
+		url += "?instType=" + instType
+	}
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	var result struct {
+		Code string                      `json:"code"`
+		Msg  string                      `json:"msg"`
+		Data []types.AccountPositionRisk `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	return result.Data, nil
+}

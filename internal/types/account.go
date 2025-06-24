@@ -132,3 +132,31 @@ type AccountPosition struct {
 	NonSettleAvgPx         string        `json:"nonSettleAvgPx"`
 	SettledPnl             string        `json:"settledPnl"`
 }
+
+type AccountPositionRisk struct {
+	AdjEq   string                `json:"adjEq"`
+	BalData []AccountRiskBalance  `json:"balData"`
+	PosData []AccountRiskPosition `json:"posData"`
+	Ts      string                `json:"ts"`
+}
+
+type AccountRiskBalance struct {
+	Ccy   string `json:"ccy"`
+	Eq    string `json:"eq"`
+	DisEq string `json:"disEq"`
+}
+
+type AccountRiskPosition struct {
+	BaseBal     string `json:"baseBal"`
+	Ccy         string `json:"ccy"`
+	InstId      string `json:"instId"`
+	InstType    string `json:"instType"`
+	MgnMode     string `json:"mgnMode"`
+	NotionalCcy string `json:"notionalCcy"`
+	NotionalUsd string `json:"notionalUsd"`
+	Pos         string `json:"pos"`
+	PosCcy      string `json:"posCcy"`
+	PosId       string `json:"posId"`
+	PosSide     string `json:"posSide"`
+	QuoteBal    string `json:"quoteBal"`
+}
