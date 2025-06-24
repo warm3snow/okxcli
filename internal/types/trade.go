@@ -26,3 +26,74 @@ type PlaceOrderResponse struct {
 	SMsg    string `json:"sMsg"`
 	Ts      string `json:"ts"`
 }
+
+// CancelOrderRequest 撤单请求结构体
+type CancelOrderRequest struct {
+	InstID  string `json:"instId"`
+	OrdID   string `json:"ordId,omitempty"`
+	ClOrdID string `json:"clOrdId,omitempty"`
+}
+
+// CancelOrderResponse 撤单响应数据
+type CancelOrderResponse struct {
+	ClOrdID string `json:"clOrdId"`
+	OrdID   string `json:"ordId"`
+	Ts      string `json:"ts"`
+	SCode   string `json:"sCode"`
+	SMsg    string `json:"sMsg"`
+}
+
+// PendingOrdersResponse 未完成订单响应数据
+type PendingOrdersResponse struct {
+	AccFillSz          string              `json:"accFillSz"`          // 累计成交数量
+	AlgoClOrdId        string              `json:"algoClOrdId"`        // 客户自定义策略订单ID
+	AlgoId             string              `json:"algoId"`             // 策略订单ID
+	AttachAlgoClOrdId  string              `json:"attachAlgoClOrdId"`  // 下单附带止盈止损，客户自定义的策略订单ID
+	AttachAlgoOrds     []map[string]string `json:"attachAlgoOrds"`     // 下单附带止盈止损信息
+	AvgPx              string              `json:"avgPx"`              // 成交均价
+	CTime              string              `json:"cTime"`              // 订单创建时间
+	CancelSource       string              `json:"cancelSource"`       // 订单取消来源
+	CancelSourceReason string              `json:"cancelSourceReason"` // 订单取消来源原因
+	Category           string              `json:"category"`           // 订单类别
+	Ccy                string              `json:"ccy"`                // 保证金币种
+	ClOrdId            string              `json:"clOrdId"`            // 客户自定义订单ID
+	Fee                string              `json:"fee"`                // 手续费
+	FeeCcy             string              `json:"feeCcy"`             // 手续费币种
+	FillPx             string              `json:"fillPx"`             // 最新成交价格
+	FillSz             string              `json:"fillSz"`             // 最新成交数量
+	FillTime           string              `json:"fillTime"`           // 最新成交时间
+	InstId             string              `json:"instId"`             // 产品ID
+	InstType           string              `json:"instType"`           // 产品类型
+	IsTpLimit          string              `json:"isTpLimit"`          // 是否限价止盈
+	Lever              string              `json:"lever"`              // 杠杆倍数
+	LinkedAlgoOrd      map[string]string   `json:"linkedAlgoOrd"`      // 止损订单信息
+	OrdId              string              `json:"ordId"`              // 订单ID
+	OrdType            string              `json:"ordType"`            // 订单类型
+	Pnl                string              `json:"pnl"`                // 收益
+	PosSide            string              `json:"posSide"`            // 持仓方向
+	Px                 string              `json:"px"`                 // 委托价格
+	PxType             string              `json:"pxType"`             // 期权订单价格类型
+	PxUsd              string              `json:"pxUsd"`              // 期权订单价格
+	PxVol              string              `json:"pxVol"`              // 期权订单的隐含波动率
+	QuickMgnType       string              `json:"quickMgnType"`       // 一键借币类型
+	Rebate             string              `json:"rebate"`             // 返佣金额
+	RebateCcy          string              `json:"rebateCcy"`          // 返佣币种
+	ReduceOnly         string              `json:"reduceOnly"`         // 是否仅减仓
+	Side               string              `json:"side"`               // 订单方向
+	SlOrdPx            string              `json:"slOrdPx"`            // 止损委托价
+	SlTriggerPx        string              `json:"slTriggerPx"`        // 止损触发价
+	SlTriggerPxType    string              `json:"slTriggerPxType"`    // 止损触发价类型
+	Source             string              `json:"source"`             // 订单来源
+	State              string              `json:"state"`              // 订单状态
+	StpId              string              `json:"stpId"`              // 自成交保护组ID
+	StpMode            string              `json:"stpMode"`            // 自成交保护模式
+	Sz                 string              `json:"sz"`                 // 委托数量
+	Tag                string              `json:"tag"`                // 订单标签
+	TdMode             string              `json:"tdMode"`             // 交易模式
+	TgtCcy             string              `json:"tgtCcy"`             // 市价单委托数量的类型
+	TpOrdPx            string              `json:"tpOrdPx"`            // 止盈委托价
+	TpTriggerPx        string              `json:"tpTriggerPx"`        // 止盈触发价
+	TpTriggerPxType    string              `json:"tpTriggerPxType"`    // 止盈触发价类型
+	TradeId            string              `json:"tradeId"`            // 最新成交ID
+	UTime              string              `json:"uTime"`              // 订单状态更新时间
+}

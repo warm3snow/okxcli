@@ -9,7 +9,3 @@ var TradeCmd = &cobra.Command{
 	Short: "Trade related commands (e.g. place order)",
 	Long:  `Provides commands for trading operations like placing, canceling, or amending orders.`,
 }
-
-func init() {
-	// 子命令将在这里注册
-}
