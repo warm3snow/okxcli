@@ -79,27 +79,61 @@ func (c *Client) CancelOrder(req *types.CancelOrderRequest) ([]types.CancelOrder
 func (c *Client) GetPendingOrders(instType, instId, ordType, state, after, before, limit string) ([]types.PendingOrdersResponse, error) {
 	url := "/api/v5/trade/orders-pending"
 
-	params := make(map[string]string)
 	if instType != "" {
-		params["instType"] = instType
+		url += "?instType=" + instType
 	}
 	if instId != "" {
-		params["instId"] = instId
+		url += "&instId=" + instId
 	}
 	if ordType != "" {
-		params["ordType"] = ordType
+		url += "&ordType=" + ordType
 	}
 	if state != "" {
-		params["state"] = state
+		url += "&state=" + state
 	}
 	if after != "" {
-		params["after"] = after
+		url += "&after=" + after
 	}
 	if before != "" {
-		params["before"] = before
+		url += "&before=" + before
 	}
 	if limit != "" {
-		params["limit"] = limit
+		url += "&limit=" + limit
+	}
+
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error making request: %w", err)
+	}
+
+	var result struct {
+		Code string                        `json:"code"`
+		Msg  string                        `json:"msg"`
+		Data []types.PendingOrdersResponse `json:"data"`
+	}
+
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, fmt.Errorf("error decoding response: %w", err)
+	}
+
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error code %s: %s", result.Code, result.Msg)
+	}
+
+	return result.Data, nil
+}
+
+// GetOrder 获取订单信息
+func (c *Client) GetOrder(instId, ordId, clOrdId string) ([]types.PendingOrdersResponse, error) {
+	url := "/api/v5/trade/order"
+	if instId != "" {
+		url += "?instId=" + instId
+	}
+	if ordId != "" {
+		url += "&ordId=" + ordId
+	}
+	if clOrdId != "" {
+		url += "&clOrdId=" + clOrdId
 	}
 
 	resp, err := c.SendRequest("GET", url, nil)

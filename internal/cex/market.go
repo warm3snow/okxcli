@@ -12,7 +12,7 @@ func (c *Client) GetTicker(symbol string) (*types.Ticker, error) {
 	url := fmt.Sprintf("/api/v5/market/ticker?instId=%s", symbol)
 
 	// Set headers
-	resp, err := c.SendRequest("GET", url, symbol)
+	resp, err := c.SendRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error making request: %w", err)
 	}
