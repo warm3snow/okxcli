@@ -31,3 +31,31 @@ func (c *Client) GetAccountBalance(ccys ...string) ([]types.AccountBalance, erro
 	}
 	return result.Data, nil
 }
+
+// GetAccountPositions 查询持仓
+func (c *Client) GetAccountPositions(params map[string]string) ([]types.AccountPosition, error) {
+	url := "/api/v5/account/positions"
+	if len(params) > 0 {
+		var arr []string
+		for k, v := range params {
+			arr = append(arr, fmt.Sprintf("%s=%s", k, v))
+		}
+		url += "?" + strings.Join(arr, "&")
+	}
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	var result struct {
+		Code string                  `json:"code"`
+		Msg  string                  `json:"msg"`
+		Data []types.AccountPosition `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	return result.Data, nil
+}

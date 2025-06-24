@@ -9,4 +9,5 @@ var AccountCmd = &cobra.Command{
 
 func init() {
 	AccountCmd.AddCommand(BalanceCmd)
+	AccountCmd.AddCommand(PositionsCmd)
 }
