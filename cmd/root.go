@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/warm3snow/cexcli/cmd/account"
 	"github.com/warm3snow/cexcli/cmd/asset"
 	"github.com/warm3snow/cexcli/cmd/market"
 	"github.com/warm3snow/cexcli/internal/config"
@@ -56,6 +57,6 @@ func init() {
 
 	// Add commands
 	rootCmd.AddCommand(market.MarketCmd)
-	rootCmd.AddCommand(asset.BalanceCmd)
-	rootCmd.AddCommand(asset.ValuationCmd)
+	rootCmd.AddCommand(asset.AssetCmd)
+	rootCmd.AddCommand(account.AccountCmd)
 }
