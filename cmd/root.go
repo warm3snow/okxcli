@@ -9,6 +9,7 @@ import (
 	"github.com/warm3snow/cexcli/cmd/account"
 	"github.com/warm3snow/cexcli/cmd/asset"
 	"github.com/warm3snow/cexcli/cmd/market"
+	"github.com/warm3snow/cexcli/cmd/public"
 	"github.com/warm3snow/cexcli/cmd/trade"
 	"github.com/warm3snow/cexcli/internal/config"
 	"github.com/warm3snow/cexcli/logger"
@@ -63,4 +64,5 @@ func init() {
 	rootCmd.AddCommand(asset.AssetCmd)
 	rootCmd.AddCommand(account.AccountCmd)
 	rootCmd.AddCommand(trade.TradeCmd)
+	rootCmd.AddCommand(public.PublicCmd)
 }

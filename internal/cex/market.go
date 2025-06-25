@@ -37,3 +37,33 @@ func (c *Client) GetTicker(symbol string) (*types.Ticker, error) {
 
 	return &result.Data[0], nil
 }
+
+// GetTickers 获取所有产品行情
+func (c *Client) GetTickers(instType, uly, instFamily string) ([]types.Ticker, error) {
+	url := "/api/v5/market/tickers"
+	if instType != "" {
+		url += "?instType=" + instType
+	}
+	if uly != "" {
+		url += "?uly=" + uly
+	}
+	if instFamily != "" {
+		url += "?instFamily=" + instFamily
+	}
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	var result struct {
+		Code string         `json:"code"`
+		Msg  string         `json:"msg"`
+		Data []types.Ticker `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	return result.Data, nil
+}
