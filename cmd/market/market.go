@@ -10,7 +10,3 @@ var MarketCmd = &cobra.Command{
 	Long: `Market data commands allow you to fetch various market information from CEX exchange,
 including tickers, order books, trades, and more.`,
 }
-
-func init() {
-	MarketCmd.AddCommand(tickerCmd)
-}
