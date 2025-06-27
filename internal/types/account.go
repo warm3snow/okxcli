@@ -160,3 +160,31 @@ type AccountRiskPosition struct {
 	PosSide     string `json:"posSide"`
 	QuoteBal    string `json:"quoteBal"`
 }
+
+type AccountConfig struct {
+	AcctLv              string   `json:"acctLv"`
+	AcctStpMode         string   `json:"acctStpMode"`
+	AutoLoan            bool     `json:"autoLoan"`
+	CtIsoMode           string   `json:"ctIsoMode"`
+	EnableSpotBorrow    bool     `json:"enableSpotBorrow"`
+	GreeksType          string   `json:"greeksType"`
+	IP                  string   `json:"ip"`
+	Type                string   `json:"type"`
+	KycLv               string   `json:"kycLv"`
+	Label               string   `json:"label"`
+	Level               string   `json:"level"`
+	LevelTmp            string   `json:"levelTmp"`
+	LiquidationGear     string   `json:"liquidationGear"`
+	MainUid             string   `json:"mainUid"`
+	MgnIsoMode          string   `json:"mgnIsoMode"`
+	OpAuth              string   `json:"opAuth"`
+	Perm                string   `json:"perm"`
+	PosMode             string   `json:"posMode"`
+	RoleType            string   `json:"roleType"`
+	SpotBorrowAutoRepay bool     `json:"spotBorrowAutoRepay"`
+	SpotOffsetType      string   `json:"spotOffsetType"`
+	SpotRoleType        string   `json:"spotRoleType"`
+	SpotTraderInsts     []string `json:"spotTraderInsts"`
+	TraderInsts         []string `json:"traderInsts"`
+	Uid                 string   `json:"uid"`
+}

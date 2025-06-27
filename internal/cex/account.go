@@ -83,3 +83,27 @@ func (c *Client) GetAccountPositionRisk(instType string) ([]types.AccountPositio
 	}
 	return result.Data, nil
 }
+
+// GetAccountConfig 获取账户配置信息
+func (c *Client) GetAccountConfig() (*types.AccountConfig, error) {
+	url := "/api/v5/account/config"
+	resp, err := c.SendRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	var result struct {
+		Code string                `json:"code"`
+		Msg  string                `json:"msg"`
+		Data []types.AccountConfig `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	if len(result.Data) == 0 {
+		return nil, fmt.Errorf("no data returned")
+	}
+	return &result.Data[0], nil
+}
