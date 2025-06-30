@@ -131,3 +131,27 @@ func (c *Client) SetLeverage(req *types.SetLeverageRequest) (*types.SetLeverageR
 	}
 	return &result.Data[0], nil
 }
+
+// SetPositionMode 设置持仓模式
+func (c *Client) SetPositionMode(req *types.SetPositionModeRequest) (*types.SetPositionModeResponse, error) {
+	url := "/api/v5/account/set-position-mode"
+	resp, err := c.SendRequest("POST", url, req)
+	if err != nil {
+		return nil, err
+	}
+	var result struct {
+		Code string                          `json:"code"`
+		Msg  string                          `json:"msg"`
+		Data []types.SetPositionModeResponse `json:"data"`
+	}
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, err
+	}
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error: %s", result.Msg)
+	}
+	if len(result.Data) == 0 {
+		return nil, fmt.Errorf("no data returned")
+	}
+	return &result.Data[0], nil
+}

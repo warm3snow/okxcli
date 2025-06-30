@@ -61,7 +61,7 @@ type AccountBalance struct {
 	NotionalUsdForFutures string                 `json:"notionalUsdForFutures"`
 	NotionalUsdForOption  string                 `json:"notionalUsdForOption"`
 	NotionalUsdForSwap    string                 `json:"notionalUsdForSwap"`
-	OrdFroz               string                 `json:"ordFroz"`
+	OrdFroz               string                 `json:"ordFrozen"`
 	TotalEq               string                 `json:"totalEq"`
 	UTime                 string                 `json:"uTime"`
 	Upl                   string                 `json:"upl"`
@@ -204,4 +204,14 @@ type SetLeverageResponse struct {
 	MgnMode string `json:"mgnMode"`
 	InstId  string `json:"instId"`
 	PosSide string `json:"posSide"`
+}
+
+// SetPositionModeRequest 设置持仓模式请求
+type SetPositionModeRequest struct {
+	PosMode string `json:"posMode"` // long_short_mode：开平仓模式 net_mode：买卖模式
+}
+
+// SetPositionModeResponse 设置持仓模式响应
+type SetPositionModeResponse struct {
+	PosMode string `json:"posMode"`
 }
