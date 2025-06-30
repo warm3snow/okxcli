@@ -188,3 +188,20 @@ type AccountConfig struct {
 	TraderInsts         []string `json:"traderInsts"`
 	Uid                 string   `json:"uid"`
 }
+
+// SetLeverageRequest 设置杠杆请求
+type SetLeverageRequest struct {
+	InstId  string `json:"instId,omitempty"`
+	Ccy     string `json:"ccy,omitempty"`
+	Lever   string `json:"lever"`
+	MgnMode string `json:"mgnMode"`
+	PosSide string `json:"posSide,omitempty"`
+}
+
+// SetLeverageResponse 设置杠杆响应
+type SetLeverageResponse struct {
+	Lever   string `json:"lever"`
+	MgnMode string `json:"mgnMode"`
+	InstId  string `json:"instId"`
+	PosSide string `json:"posSide"`
+}
