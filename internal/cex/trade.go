@@ -157,3 +157,37 @@ func (c *Client) GetOrder(instId, ordId, clOrdId string) ([]types.PendingOrdersR
 
 	return result.Data, nil
 }
+
+// AmendOrder 修改订单
+func (c *Client) AmendOrder(req *types.AmendOrderRequest) ([]types.AmendOrderResponse, error) {
+	url := "/api/v5/trade/amend-order"
+
+	resp, err := c.SendRequest("POST", url, req)
+	if err != nil {
+		return nil, fmt.Errorf("error making request: %w", err)
+	}
+
+	var result struct {
+		Code string                     `json:"code"`
+		Msg  string                     `json:"msg"`
+		Data []types.AmendOrderResponse `json:"data"`
+	}
+
+	if err := json.Unmarshal(resp, &result); err != nil {
+		return nil, fmt.Errorf("error decoding response: %w", err)
+	}
+
+	if result.Code != "0" {
+		return nil, fmt.Errorf("API error code %s: %s", result.Code, result.Msg)
+	}
+
+	// 检查具体修改订单的返回状态
+	for _, amendResult := range result.Data {
+		if amendResult.SCode != "0" {
+			return nil, fmt.Errorf("order amendment failed for ordId '%s': %s (sCode: %s)",
+				amendResult.OrdId, amendResult.SMsg, amendResult.SCode)
+		}
+	}
+
+	return result.Data, nil
+}

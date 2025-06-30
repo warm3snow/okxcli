@@ -97,3 +97,42 @@ type PendingOrdersResponse struct {
 	TradeId            string              `json:"tradeId"`            // 最新成交ID
 	UTime              string              `json:"uTime"`              // 订单状态更新时间
 }
+
+// AmendOrderAttachAlgo 修改订单附带止盈止损信息
+type AmendOrderAttachAlgo struct {
+	AttachAlgoId         string `json:"attachAlgoId,omitempty"`         // 附带止盈止损的订单ID
+	AttachAlgoClOrdId    string `json:"attachAlgoClOrdId,omitempty"`    // 客户自定义的策略订单ID
+	NewTpTriggerPx       string `json:"newTpTriggerPx,omitempty"`       // 止盈触发价
+	NewTpOrdPx           string `json:"newTpOrdPx,omitempty"`           // 止盈委托价
+	NewTpOrdKind         string `json:"newTpOrdKind,omitempty"`         // 止盈订单类型
+	NewSlTriggerPx       string `json:"newSlTriggerPx,omitempty"`       // 止损触发价
+	NewSlOrdPx           string `json:"newSlOrdPx,omitempty"`           // 止损委托价
+	NewTpTriggerPxType   string `json:"newTpTriggerPxType,omitempty"`   // 止盈触发价类型
+	NewSlTriggerPxType   string `json:"newSlTriggerPxType,omitempty"`   // 止损触发价类型
+	Sz                   string `json:"sz,omitempty"`                   // 新的张数
+	AmendPxOnTriggerType string `json:"amendPxOnTriggerType,omitempty"` // 是否启用开仓价止损
+}
+
+// AmendOrderRequest 修改订单请求结构体
+type AmendOrderRequest struct {
+	InstId         string                 `json:"instId"`                   // 产品ID
+	CxlOnFail      bool                   `json:"cxlOnFail,omitempty"`      // 修改失败时是否自动撤单
+	OrdId          string                 `json:"ordId,omitempty"`          // 订单ID
+	ClOrdId        string                 `json:"clOrdId,omitempty"`        // 用户自定义订单ID
+	ReqId          string                 `json:"reqId,omitempty"`          // 用户自定义修改事件ID
+	NewSz          string                 `json:"newSz,omitempty"`          // 修改的新数量
+	NewPx          string                 `json:"newPx,omitempty"`          // 修改后的新价格
+	NewPxUsd       string                 `json:"newPxUsd,omitempty"`       // 以USD价格进行期权改单
+	NewPxVol       string                 `json:"newPxVol,omitempty"`       // 以隐含波动率进行期权改单
+	AttachAlgoOrds []AmendOrderAttachAlgo `json:"attachAlgoOrds,omitempty"` // 修改附带止盈止损信息
+}
+
+// AmendOrderResponse 修改订单响应数据
+type AmendOrderResponse struct {
+	ClOrdId string `json:"clOrdId"` // 用户自定义订单ID
+	OrdId   string `json:"ordId"`   // 订单ID
+	ReqId   string `json:"reqId"`   // 用户自定义修改事件ID
+	SCode   string `json:"sCode"`   // 事件执行结果的code，0代表成功
+	SMsg    string `json:"sMsg"`    // 事件执行失败时的msg
+	Ts      string `json:"ts"`      // 事件执行时间
+}
