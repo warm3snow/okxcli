@@ -1,0 +1,15 @@
+# CEX API 配置
+cex:
+  base_url: "https://www.okx.com"
+  # API 认证信息
+  api:
+    # 模拟账户 apply api key in www.okx.com
+    api_key: "332c37-052617d-ebaf-ad4872-a45f915f"
+    secret_key: "4D8579C57205248D6A6BBC5E5A9BBCD4"
+    passphrase: "123456"
+    is_simulated: true
+
+# 日志配置
+logging:
+  level: "debug"  # debug, info, warn, error
+  format: "text"  # text, json

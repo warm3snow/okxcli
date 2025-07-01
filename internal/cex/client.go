@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/cexcli/logger"
 )
 
 // Client represents an CEX API client
@@ -81,6 +82,8 @@ func (c *Client) SendRequest(method, requestPath string, body interface{}) ([]by
 	} else {
 		req.SetHeader("OK-ACCESS-SIGN", c.sign(timestamp, method, requestPath, ""))
 	}
+
+	logger.Debugf("request headers: %v", req.Header)
 
 	var resp *resty.Response
 	var err error

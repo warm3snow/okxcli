@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	// "fmt"
 	"sync"
 
 	"github.com/spf13/viper"
@@ -14,7 +14,7 @@ var (
 
 // Init load and parse config
 func Init() {
-	viper.SetConfigName("config")
+	viper.SetConfigName("cex")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("$HOME/.cexcli")
@@ -88,15 +88,15 @@ type Config struct {
 // validateConfig 验证配置
 func (config Config) ValidateConfig() error {
 
-	// 检查通知器配置
-	if !config.Notifications.EnableMacOS && !config.Notifications.EnableFeishu {
-		return fmt.Errorf("no notifiers enabled, please enable at least one notifier")
-	}
+	// // 检查通知器配置
+	// if !config.Notifications.EnableMacOS && !config.Notifications.EnableFeishu {
+	// 	return fmt.Errorf("no notifiers enabled, please enable at least one notifier")
+	// }
 
-	// 检查飞书配置
-	if config.Notifications.EnableFeishu && config.Feishu.WebhookURL == "" {
-		return fmt.Errorf("feishu notifications enabled but webhook URL not configured")
-	}
+	// // 检查飞书配置
+	// if config.Notifications.EnableFeishu && config.Feishu.WebhookURL == "" {
+	// 	return fmt.Errorf("feishu notifications enabled but webhook URL not configured")
+	// }
 
 	return nil
 }
