@@ -44,8 +44,8 @@ var PositionsCmd = &cobra.Command{
 		}
 		if viper.GetBool("simple") {
 			for _, p := range positions {
-				fmt.Printf("产品: %s, 持仓方向: %s, 持仓数量: %s, 杠杆: %s, 未实现盈亏: %s, 保证金模式: %s\n",
-					p.InstId, p.PosSide, p.Pos, p.Lever, p.Upl, p.MgnMode)
+				fmt.Printf("产品: %s, 持仓方向: %s, 持仓数量: %s, 杠杆: %s, 未实现盈亏: %s, 保证金模式: %s, 保证金: %s, 开仓价: %s, 标记价格: %s, 强平价: %s, 保证金率: %s, 持仓价值(USD): %s\n",
+					p.InstId, p.PosSide, p.Pos, p.Lever, p.Upl, p.MgnMode, p.Margin, p.AvgPx, p.MarkPx, p.LiqPx, p.MgnRatio, p.NotionalUsd)
 			}
 		} else {
 			output, err := json.MarshalIndent(positions, "", "  ")
