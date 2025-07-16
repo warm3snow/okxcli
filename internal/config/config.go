@@ -2,6 +2,8 @@ package config
 
 import (
 	// "fmt"
+
+	"fmt"
 	"sync"
 
 	"github.com/spf13/viper"
@@ -13,12 +15,16 @@ var (
 )
 
 // Init load and parse config
-func Init() {
-	viper.SetConfigName("cex")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
-	viper.AddConfigPath("$HOME/.cexcli")
-	viper.AddConfigPath("/etc/cexcli")
+func Init(cfgFile string) {
+	if cfgFile != "" {
+		viper.SetConfigFile(cfgFile)
+	} else {
+		viper.SetConfigName("config")
+		viper.SetConfigType("yaml")
+		viper.AddConfigPath(".")
+		viper.AddConfigPath("$HOME/.okxcli")
+		viper.AddConfigPath("/etc/okxcli")
+	}
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
@@ -36,19 +42,20 @@ func Init() {
 func GetConfig() *Config {
 	once.Do(func() {
 		if config == nil {
-			Init()
+			Init(viper.GetString("config"))
 		}
 	})
+	fmt.Printf("Config content: %+v\n", config)
 	return config
 }
 
-// CEXConfig CEX 配置结构
-type CEXConfig struct {
+// OKXConfig OKX 配置结构
+type OKXConfig struct {
 	BaseURL string       `yaml:"base_url" mapstructure:"base_url"`
-	API     CEXAPIConfig `yaml:"api" mapstructure:"api"`
+	API     OKXAPIConfig `yaml:"api" mapstructure:"api"`
 }
 
-type CEXAPIConfig struct {
+type OKXAPIConfig struct {
 	APIKey      string `yaml:"api_key" mapstructure:"api_key"`
 	SecretKey   string `yaml:"secret_key" mapstructure:"secret_key"`
 	Passphrase  string `yaml:"passphrase" mapstructure:"passphrase"`
@@ -77,7 +84,7 @@ type LoggingConfig struct {
 }
 
 type Config struct {
-	CEX           CEXConfig           `yaml:"cex" mapstructure:"cex"`
+	OKX           OKXConfig           `yaml:"okx" mapstructure:"okx"`
 	Feishu        FeishuConfig        `yaml:"feishu" mapstructure:"feishu"`
 	Notifications NotificationsConfig `yaml:"notifications" mapstructure:"notifications"`
 	Scheduler     SchedulerConfig     `yaml:"scheduler" mapstructure:"scheduler"`

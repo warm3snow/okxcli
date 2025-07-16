@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
 )
 
 var PositionsCmd = &cobra.Command{
@@ -17,11 +17,11 @@ var PositionsCmd = &cobra.Command{
 	Long:  "Get account positions. 可用参数: --instId=BTC-USDT --instType=SWAP ...",
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg := config.GetConfig()
-		client := cex.NewClient(cfg)
-		if cfg.CEX.BaseURL != "" {
-			client.SetBaseURL(cfg.CEX.BaseURL)
+		client := okx.NewClient(cfg)
+		if cfg.OKX.BaseURL != "" {
+			client.SetBaseURL(cfg.OKX.BaseURL)
 		}
-		client.SetSimulated(cfg.CEX.API.IsSimulated)
+		client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 		params := map[string]string{}
 		instId, _ := cmd.Flags().GetString("instId")

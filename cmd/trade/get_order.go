@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
-	"github.com/warm3snow/cexcli/internal/types"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
+	"github.com/warm3snow/okxcli/internal/types"
 )
 
 var getOrderCmd = &cobra.Command{
@@ -43,11 +43,11 @@ func runGetOrder(cmd *cobra.Command, args []string) {
 	}
 
 	cfg := config.GetConfig()
-	client := cex.NewClient(cfg)
-	if cfg.CEX.BaseURL != "" {
-		client.SetBaseURL(cfg.CEX.BaseURL)
+	client := okx.NewClient(cfg)
+	if cfg.OKX.BaseURL != "" {
+		client.SetBaseURL(cfg.OKX.BaseURL)
 	}
-	client.SetSimulated(cfg.CEX.API.IsSimulated)
+	client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 	results, err := client.GetOrder(
 		getOrderInstId,

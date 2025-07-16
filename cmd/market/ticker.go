@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
 )
 
 var tickerCmd = &cobra.Command{
@@ -18,15 +18,15 @@ var tickerCmd = &cobra.Command{
 		symbol := args[0]
 
 		cfg := config.GetConfig()
-		client := cex.NewClient(cfg)
+		client := okx.NewClient(cfg)
 
 		// Set base URL from config if provided
-		if cfg.CEX.BaseURL != "" {
-			client.SetBaseURL(cfg.CEX.BaseURL)
+		if cfg.OKX.BaseURL != "" {
+			client.SetBaseURL(cfg.OKX.BaseURL)
 		}
 
 		// Set simulated trading mode
-		client.SetSimulated(cfg.CEX.API.IsSimulated)
+		client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 		ticker, err := client.GetTicker(symbol)
 		if err != nil {

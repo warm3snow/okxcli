@@ -8,21 +8,21 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
 )
 
 var BalanceCmd = &cobra.Command{
 	Use:   "balance [ccy1,ccy2,...]",
 	Short: "Get trading account balance",
-	Long:  "Get trading account balance. Optionally specify currencies, e.g. cexcli asset account BTC,ETH",
+	Long:  "Get trading account balance. Optionally specify currencies, e.g. okxcli asset account BTC,ETH",
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg := config.GetConfig()
-		client := cex.NewClient(cfg)
-		if cfg.CEX.BaseURL != "" {
-			client.SetBaseURL(cfg.CEX.BaseURL)
+		client := okx.NewClient(cfg)
+		if cfg.OKX.BaseURL != "" {
+			client.SetBaseURL(cfg.OKX.BaseURL)
 		}
-		client.SetSimulated(cfg.CEX.API.IsSimulated)
+		client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 		var ccys []string
 		if len(args) > 0 && args[0] != "" {

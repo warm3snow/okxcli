@@ -1,4 +1,4 @@
-module github.com/warm3snow/cexcli
+module github.com/warm3snow/okxcli
 
 go 1.24.1
 

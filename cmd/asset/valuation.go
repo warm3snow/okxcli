@@ -6,24 +6,24 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
 )
 
 var ValuationCmd = &cobra.Command{
 	Use:   "valuation [ccy]",
 	Short: "Get account asset valuation",
-	Long:  `Get account asset valuation. Optionally specify the unit (e.g. BTC, USDT, USD, etc.).\nExample:\n  cexcli valuation\n  cexcli valuation USDT`,
+	Long:  `Get account asset valuation. Optionally specify the unit (e.g. BTC, USDT, USD, etc.).\nExample:\n  okxcli valuation\n  okxcli valuation USDT`,
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg := config.GetConfig()
-		client := cex.NewClient(cfg)
+		client := okx.NewClient(cfg)
 
 		// Set base URL from config if provided
-		if cfg.CEX.BaseURL != "" {
-			client.SetBaseURL(cfg.CEX.BaseURL)
+		if cfg.OKX.BaseURL != "" {
+			client.SetBaseURL(cfg.OKX.BaseURL)
 		}
-		client.SetSimulated(cfg.CEX.API.IsSimulated)
+		client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 		ccy := ""
 		if len(args) > 0 {

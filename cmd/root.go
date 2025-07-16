@@ -6,21 +6,21 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/warm3snow/cexcli/cmd/account"
-	"github.com/warm3snow/cexcli/cmd/asset"
-	"github.com/warm3snow/cexcli/cmd/market"
-	"github.com/warm3snow/cexcli/cmd/public"
-	"github.com/warm3snow/cexcli/cmd/trade"
-	"github.com/warm3snow/cexcli/internal/config"
-	"github.com/warm3snow/cexcli/logger"
+	"github.com/warm3snow/okxcli/cmd/account"
+	"github.com/warm3snow/okxcli/cmd/asset"
+	"github.com/warm3snow/okxcli/cmd/market"
+	"github.com/warm3snow/okxcli/cmd/public"
+	"github.com/warm3snow/okxcli/cmd/trade"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/logger"
 )
 
 var (
 	cfgFile string
 	rootCmd = &cobra.Command{
-		Use:   "cexcli",
-		Short: "A CLI tool for interacting with CEX exchange",
-		Long: `cexcli is a comprehensive command line interface for interacting with CEX exchange.
+		Use:   "okxcli",
+		Short: "A CLI tool for interacting with OKX exchange",
+		Long: `okxcli is a comprehensive command line interface for interacting with OKX exchange.
 It provides commands for trading, account management, and market data retrieval.`,
 	}
 )
@@ -34,8 +34,9 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(config.Init)
 	cobra.OnInitialize(func() {
+		config.Init(cfgFile)
+
 		logger.InitLogger(
 			config.GetConfig().Logging.Level,
 			config.GetConfig().Logging.Format,
@@ -43,20 +44,20 @@ func init() {
 	})
 
 	// Global flags
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./cex.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./config.yaml)")
 
 	// Add API key flags (these will override config file values)
-	rootCmd.PersistentFlags().String("api-key", "", "CEX API key")
-	rootCmd.PersistentFlags().String("api-secret", "", "CEX API secret")
-	rootCmd.PersistentFlags().String("passphrase", "", "CEX API passphrase")
+	rootCmd.PersistentFlags().String("api-key", "", "OKX API key")
+	rootCmd.PersistentFlags().String("api-secret", "", "OKX API secret")
+	rootCmd.PersistentFlags().String("passphrase", "", "OKX API passphrase")
 	rootCmd.PersistentFlags().Bool("simulated", false, "Use simulated trading")
 	rootCmd.PersistentFlags().Bool("simple", false, "Stdout simple information")
 
 	// Bind flags to viper
-	viper.BindPFlag("cex.api.api_key", rootCmd.PersistentFlags().Lookup("api-key"))
-	viper.BindPFlag("cex.api.secret_key", rootCmd.PersistentFlags().Lookup("api-secret"))
-	viper.BindPFlag("cex.api.passphrase", rootCmd.PersistentFlags().Lookup("passphrase"))
-	viper.BindPFlag("cex.api.is_simulated", rootCmd.PersistentFlags().Lookup("simulated"))
+	viper.BindPFlag("okx.api.api_key", rootCmd.PersistentFlags().Lookup("api-key"))
+	viper.BindPFlag("okx.api.secret_key", rootCmd.PersistentFlags().Lookup("api-secret"))
+	viper.BindPFlag("okx.api.passphrase", rootCmd.PersistentFlags().Lookup("passphrase"))
+	viper.BindPFlag("okx.api.is_simulated", rootCmd.PersistentFlags().Lookup("simulated"))
 	viper.BindPFlag("simple", rootCmd.PersistentFlags().Lookup("simple"))
 
 	// Add commands

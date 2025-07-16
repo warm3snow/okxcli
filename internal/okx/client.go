@@ -1,4 +1,4 @@
-package cex
+package okx
 
 import (
 	"crypto/hmac"
@@ -11,29 +11,29 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/warm3snow/cexcli/internal/config"
-	"github.com/warm3snow/cexcli/logger"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/logger"
 )
 
-// Client represents an CEX API client
+// Client represents an OKX API client
 type Client struct {
 	config     *config.Config
 	BaseURL    string
 	HTTPClient *resty.Client
 }
 
-// NewClient creates a new CEX API client
+// NewClient creates a new OKX API client
 func NewClient(cfg *config.Config) *Client {
 	client := resty.New()
 	client.SetTimeout(10 * time.Second)
 
-	if cfg.CEX.API.IsSimulated {
+	if cfg.OKX.API.IsSimulated {
 		client.SetHeader("x-simulated-trading", "1")
 	}
 
 	return &Client{
 		config:     cfg,
-		BaseURL:    cfg.CEX.BaseURL,
+		BaseURL:    cfg.OKX.BaseURL,
 		HTTPClient: client,
 	}
 }
@@ -45,7 +45,7 @@ func (c *Client) SetBaseURL(url string) {
 
 // SetSimulated sets whether to use simulated trading
 func (c *Client) SetSimulated(simulated bool) {
-	c.config.CEX.API.IsSimulated = simulated
+	c.config.OKX.API.IsSimulated = simulated
 }
 
 // sign 生成 API 请求签名
@@ -55,7 +55,7 @@ func (c *Client) sign(timestamp, method, requestPath, body string) string {
 		timestamp = strings.Replace(timestamp, "Z", ".000Z", 1)
 	}
 	message := timestamp + method + requestPath + body
-	mac := hmac.New(sha256.New, []byte(c.config.CEX.API.SecretKey))
+	mac := hmac.New(sha256.New, []byte(c.config.OKX.API.SecretKey))
 	mac.Write([]byte(message))
 	return base64.StdEncoding.EncodeToString(mac.Sum(nil))
 }
@@ -66,9 +66,9 @@ func (c *Client) SendRequest(method, requestPath string, body interface{}) ([]by
 
 	req := c.HTTPClient.R().
 		SetHeaders(map[string]string{
-			"OK-ACCESS-KEY":        c.config.CEX.API.APIKey,
+			"OK-ACCESS-KEY":        c.config.OKX.API.APIKey,
 			"OK-ACCESS-TIMESTAMP":  timestamp,
-			"OK-ACCESS-PASSPHRASE": c.config.CEX.API.Passphrase,
+			"OK-ACCESS-PASSPHRASE": c.config.OKX.API.Passphrase,
 			"Content-Type":         "application/json",
 		})
 
@@ -88,7 +88,7 @@ func (c *Client) SendRequest(method, requestPath string, body interface{}) ([]by
 	var resp *resty.Response
 	var err error
 
-	fullURL := c.config.CEX.BaseURL + requestPath
+	fullURL := c.config.OKX.BaseURL + requestPath
 
 	switch method {
 	case "GET":

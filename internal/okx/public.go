@@ -1,10 +1,10 @@
-package cex
+package okx
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/warm3snow/cexcli/internal/types"
+	"github.com/warm3snow/okxcli/internal/types"
 )
 
 // GetInstruments 获取所有可交易产品的信息列表

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/warm3snow/cexcli/internal/cex"
-	"github.com/warm3snow/cexcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/config"
+	"github.com/warm3snow/okxcli/internal/okx"
 )
 
 var BalanceCmd = &cobra.Command{
@@ -16,19 +16,19 @@ var BalanceCmd = &cobra.Command{
 	Short: "Get account balance information",
 	Long: `Get account balance information for all currencies or specified currencies.
 Example:
-  cexcli balance            # Get all balances
-  cexcli balance BTC,USDT  # Get balances for specific currencies`,
+  okxcli balance            # Get all balances
+  okxcli balance BTC,USDT  # Get balances for specific currencies`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg := config.GetConfig()
-		client := cex.NewClient(cfg)
+		client := okx.NewClient(cfg)
 
 		// Set base URL from config if provided
-		if cfg.CEX.BaseURL != "" {
-			client.SetBaseURL(cfg.CEX.BaseURL)
+		if cfg.OKX.BaseURL != "" {
+			client.SetBaseURL(cfg.OKX.BaseURL)
 		}
 
 		// Set simulated trading mode
-		client.SetSimulated(cfg.CEX.API.IsSimulated)
+		client.SetSimulated(cfg.OKX.API.IsSimulated)
 
 		// Parse currencies from args
 		var currencies []string

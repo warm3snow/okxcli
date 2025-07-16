@@ -28,5 +28,4 @@ vendor/
 Thumbs.db 
 
 # 敏感配置文件
-cmd/config.yaml
-config.yaml
+config-private.yaml

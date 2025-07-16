@@ -1,11 +1,11 @@
-package cex
+package okx
 
 import (
 	"encoding/json"
 	"fmt"
 	"strings"
 
-	"github.com/warm3snow/cexcli/internal/types"
+	"github.com/warm3snow/okxcli/internal/types"
 )
 
 // GetBalances fetches the account balances for all currencies or specified currencies

@@ -1,10 +1,10 @@
-package cex
+package okx
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/warm3snow/cexcli/internal/types"
+	"github.com/warm3snow/okxcli/internal/types"
 )
 
 // PlaceOrder 执行下单操作
