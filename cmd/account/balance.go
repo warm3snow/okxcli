@@ -34,15 +34,15 @@ var BalanceCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		if viper.GetBool("simple") {
-			   for _, acc := range balances {
-				   for _, d := range acc.Details {
-					   if d.Ccy == "USDT" {
-						   fmt.Printf("币种: %s, 总权益: %s, 可用余额: %s\n", d.Ccy, d.Eq, d.AvailBal)
-					   } else {
-						   fmt.Printf("币种: %s, 总权益: %s, 可用余额: %s, 折合USDT: %s\n", d.Ccy, d.Eq, d.AvailBal, d.EqUsd)
-					   }
-				   }
-			   }
+			for _, acc := range balances {
+				for _, d := range acc.Details {
+					if d.Ccy == "USDT" {
+						fmt.Printf("币种: %s, 总权益: %s, 可用余额: %s\n", d.Ccy, d.Eq, d.AvailBal)
+					} else {
+						fmt.Printf("币种: %s, 总权益: %s, 可用余额: %s, 折合USDT: %s\n", d.Ccy, d.Eq, d.AvailBal, d.EqUsd)
+					}
+				}
+			}
 		} else {
 			output, err := json.MarshalIndent(balances, "", "  ")
 			if err != nil {
